@@ -142,3 +142,57 @@ rules: [
     ]
 }
 ```
+### CopyWebpackPlugin
+不需要经过编译可以直接运行使用的资源或文件
+`new ExtractTextPlugin('[name].css'),`
+```js
+{
+    test: /\.less$/,
+    use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: [
+            'css-loader',
+            'less-loader'
+        ]
+    })
+},
+```
+
+## webpack-dev-server 启动本地 web 服务
+```js
+// 配置端口、url、数据
+devServer: {
+        port: '1314',
+        before(app) {
+            app.get('/api/test.json', (req, res) => {
+                res.json({
+                    code: 200,
+                    message: 'hello webpack'
+                })
+            })
+        }
+    }
+```
+
+## 配置路径缩写（别名）
+```js
+// package.json
+resolve: {
+    alias: {
+        utils: path.resolve(__dirname, 'src/utils')
+    }
+},
+```
+
+## lodash
+
+    Lodash 通过降低 array、number、objects、string 等等的使用难度从而让 JavaScript 变得更简单。
+    Lodash 的模块化方法 非常适用于：
+
+    遍历 array、object 和 string
+    对值进行操作和检测
+    创建符合功能的函数
+
+lodash 作为工具，是很多组件会使用的，省去了到处 import
+
+`$ yarn add lodash -D`

@@ -1,5 +1,7 @@
 const path = require('path')
 
+const webpack = require('webpack')
+
 // 系统级变量，当前文件绝对路径
 console.log(__dirname)
 // path.resolve 路径拼接
@@ -42,6 +44,15 @@ module.exports = {
                 })
             },
             {
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        'css-loader'
+                    ]
+                })
+            },
+            {
                 test: /\.(gif|png|)$/,
                 use: [
                     {
@@ -51,6 +62,13 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        alias: {
+            utils: path.resolve(__dirname, 'src/utils')
+        },
+        // 指定包含的需要处理的文件后缀
+        extensions: ['.js', '.json', '.css', '.less']
+    },
     plugins: [
         new ExtractTextPlugin('[name].css'),
         new HtmlWebpackPlugin({
@@ -59,6 +77,21 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             { from: './src/assets/favicon.ico', to: 'favicon.ico' }
-        ])
-    ]
+        ]),
+        // lodash 作为工具，是很多组件会使用的，省去了到处 import
+        new webpack.ProvidePlugin({
+            '_': 'lodash'
+        })
+    ],
+    devServer: {
+        port: '1314',
+        before(app) {
+            app.get('/api/test.json', (req, res) => {
+                res.json({
+                    code: 200,
+                    message: 'hello webpack'
+                })
+            })
+        }
+    }
 }
