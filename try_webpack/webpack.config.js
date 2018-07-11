@@ -8,6 +8,11 @@ console.log(path.resolve(__dirname, 'dist'))
 // 抽离打包好的 (css) 文件，解决打包时 css 混入 js 的问题
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+// html 打包
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+
 module.exports = {
     // 入口文件
     entry: './src/index.js',
@@ -35,11 +40,25 @@ module.exports = {
                         'less-loader'
                     ]
                 })
-
+            },
+            {
+                test: /\.(gif|png|)$/,
+                use: [
+                    {
+                        loader: 'file-loader'
+                    }
+                ]
             }
         ]
     },
     plugins: [
-        new ExtractTextPlugin('[name].css')
+        new ExtractTextPlugin('[name].css'),
+        new HtmlWebpackPlugin({
+            file: 'index.html',
+            template: './src/index.html'
+        }),
+        new CopyWebpackPlugin([
+            { from: './src/assets/favicon.ico', to: 'favicon.ico' }
+        ])
     ]
 }
