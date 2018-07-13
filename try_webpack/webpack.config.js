@@ -20,8 +20,8 @@ module.exports = {
     entry: './src/index.js',
     // 出口
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js'
+        path: path.resolve(__dirname, 'dist'), //打包后的文件存放的地方
+        filename: '[name].js' //打包后输出文件的文件名
     },
     module: {
         rules: [

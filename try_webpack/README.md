@@ -51,6 +51,8 @@ console.log(path.resolve(__dirname, 'dist'))
 ```
 
 ### loader
+>通过使用不同的loader，webpack有能力调用外部的脚本或工具，实现对不同格式的文件的处理，比如说分析转换scss为css，或者把下一代的JS文件（ES6，ES7)转换为现代浏览器兼容的JS文件，对React的开发而言，合适的Loaders可以把React的中用到的JSX文件转换为JS文件。
+
 > loader 让 webpack 能够去处理那些非 JavaScript 文件, loader 可以将所有类型的文件转换为 webpack 能够处理的有效模块
 ```js
 module: {
@@ -104,6 +106,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 完成将生成 .css 文件
 
 - html 打包
+> 依据一个简单的index.html模板，生成一个自动引用你打包后的JS文件的新index.html
+
 `const HtmlWebpackPlugin = require('html-webpak-plugin')`
 
 ```js
@@ -143,7 +147,7 @@ rules: [
 }
 ```
 ### CopyWebpackPlugin
-不需要经过编译可以直接运行使用的资源或文件
+不需要经过编译可以直接运行使用的资源或文件，可以直接copy到运行文件夹
 `new ExtractTextPlugin('[name].css'),`
 ```js
 {
@@ -196,3 +200,8 @@ resolve: {
 lodash 作为工具，是很多组件会使用的，省去了到处 import
 
 `$ yarn add lodash -D`
+```js
+_.map([1, 2, 3], item => item * 2)
+
+// Array(3)0: 21: 42: 6length: 3__proto__: Array(0)
+```
